@@ -1,0 +1,101 @@
+﻿<sh-activity-bar-basic>
+    <div class="left">
+        <div ng-class="{ 'no-data': !$ctrl.isJobOnProduction() }" sh-tooltip>{{$ctrl.getJobTitle()}}</div>
+        <sh-gauge fill="$ctrl.getPercentage()">{{$ctrl.getPercentageText()}}</sh-gauge>
+        <sh-gauge-unknown class="animate" ng-class="$ctrl.getError()" ng-if="$ctrl.isFirstCopy()">
+            <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        </sh-gauge-unknown>
+        <sh-btn class="icon icon-cancel-color"
+            ng-show="$ctrl.isJobOnProduction()"
+            ng-click="$ctrl.onCancelClick()"
+            sh-tooltip="{{ $ctrl.getCancelTooltipLabel() }}"
+            ></sh-btn>
+    </div>
+    <div class="right">
+        <div sh-tooltip>{{$ctrl.getPagesOnProductionText()}}</div>
+        <div sh-tooltip>{{$ctrl.getCopiesOnProductionText()}}</div>
+    </div>
+    <sh-btn class="icon"
+        sh-disabled="!$ctrl.isStatusInfoButtonEnabled()"
+        ng-click="$ctrl.onStatusInfoClick()"
+        sh-tooltip>
+        <div>{{ $ctrl.getLeadingStatusText() }}</div>
+        <sh-svg-icon source="$ctrl.getLeadingStatusIconSrc()"
+            ng-class="$ctrl.getStatusInfoSvgIconClasses()"></sh-svg-icon>
+    </sh-btn>
+</sh-activity-bar-basic>
+
+<sh-activity-bar-medium ng-if="$ctrl.isExtendedView()">
+    <div sh-table="$ctrl.tableTrays"
+        class="tray-data"
+        sort="$ctrl.onTableTraysHeaderClick(id, $event)"
+        on-header-order-change="$ctrl.onTableTraysHeaderOrderChange(list)"
+        row-class="$ctrl.getTraysRowClass(row)"
+    ></div>
+    <div class="consumables" ng-if="$ctrl.isFullView()">
+        <sh-scroll scrolling-up="$ctrl.isScrollingUpConsumablesPressed()"
+            scrolling-down="$ctrl.isScrollingDownConsumablesPressed()"
+            scroll-position="$ctrl.updateConsumablesScrollButtons(position)">
+            <sh-ink-level ng-repeat="ink in $ctrl.getSortedInks() track by $index" model="ink"></sh-ink-level>
+            <div ng-repeat="row in $ctrl.getConsumableRows() track by $index">
+                <div class="consumable-halfrow">
+                    <div ng-class="$ctrl.getConsumableLabelClass(row[0])"
+                        sh-multiline-ellipsis="$ctrl.getLocalizedConsumableId(row[0])" sh-tooltip></div>
+                    <sh-svg-icon
+                        source="$ctrl.getConsumableIconSrc(row[0])"
+                        sh-tooltip="{{ $ctrl.getLocalizedConsumableLevel(row[0]) }}"></sh-svg-icon>
+                    <sh-svg-icon
+                        ng-if="$ctrl.isConsumableWithWarningError(row[0])"
+                        source="$ctrl.getConsumableWarnignErrorIconSrc(row[0])"
+                        sh-tooltip="{{ $ctrl.getLocalizedConsumableLevel(row[0]) }}"
+                        class="status-consumable"></sh-svg-icon>
+                </div>
+                <div class="consumable-halfrow">
+                    <div ng-class="$ctrl.getConsumableLabelClass(row[1])"
+                        sh-multiline-ellipsis="$ctrl.getLocalizedConsumableId(row[1])" sh-tooltip></div>
+                    <sh-svg-icon
+                        source="$ctrl.getConsumableIconSrc(row[1])"
+                        sh-tooltip="{{ $ctrl.getLocalizedConsumableLevel(row[1]) }}"></sh-svg-icon>
+                    <sh-svg-icon
+                        ng-if="$ctrl.isConsumableWithWarningError(row[1])"
+                        source="$ctrl.getConsumableWarnignErrorIconSrc(row[1])"
+                        sh-tooltip="{{ $ctrl.getLocalizedConsumableLevel(row[1]) }}"
+                        class="status-consumable"></sh-svg-icon>
+                </div>
+            </div>
+        </sh-scroll>
+        <sh-btn repeat class="icon icon-up-arrow"
+            sh-disabled="!$ctrl.isScrollingUpConsumablesEnabled()"
+            ng-click="$ctrl.onScrollUpConsumables()"></sh-btn>
+        <sh-btn repeat class="icon icon-down-arrow"
+            sh-disabled="!$ctrl.isScrollingDownConsumablesEnabled()"
+            ng-click="$ctrl.onScrollDownConsumables()"></sh-btn>
+        <sh-scroll-title sh-tooltip>{{ $ctrl.getConsumablesScrollTitle() }}</sh-scroll-title>
+    </div>
+    <!-- Note: the shBottomZone uses the class device-info to find this element! -->
+    <div class="device-info" ng-if="$ctrl.isFullView()">
+        <sh-scroll scrolling-up="$ctrl.isScrollingUpStatusPressed()"
+            scrolling-down="$ctrl.isScrollingDownStatusPressed()"
+            scroll-position="$ctrl.updateStatusScrollButtons(position)">
+            <div class="envelope-only" ng-if="$ctrl.isEnvelopeOnly()">{{ $ctrl.getEnvelopeOnlyMsg() }}</div>
+            <div ng-repeat="status in $ctrl.getPrinterStatus() track by $index"
+                ng-class-odd="'odd'">
+                <span class="main" sh-tooltip>{{ status.getMainPrinterStatus().getLocalizedValue() }}</span>
+                <span class="sub" sh-tooltip>{{ status.getPrinterSubstatus().getLocalizedValue() }}</span>
+                <sh-svg-icon source="$ctrl.getPrinterStatusLevelSrc(status)"></sh-svg-icon>
+            </div>
+            <div sh-tooltip class="no-data" ng-show="$ctrl.isNoErrorsLabelVisible()">{{ $ctrl.getNoErrorsLabel() }}</div>
+            <!-- @HACK do not remove sh-engine-img.The behavior to achieve is kind of special here. See css -->
+            <sh-engine-img></sh-engine-img>
+        </sh-scroll>
+        <sh-btn repeat class="icon icon-up-arrow"
+            sh-disabled="!$ctrl.isScrollingUpStatusEnabled()"
+            ng-click="$ctrl.onScrollUpStatus()"></sh-btn>
+        <sh-btn repeat class="icon icon-down-arrow"
+            sh-disabled="!$ctrl.isScrollingDownStatusEnabled()"
+            ng-click="$ctrl.onScrollDownStatus()"></sh-btn>
+        <sh-scroll-title sh-tooltip>{{ $ctrl.getStatusScrollTitle() }}</sh-scroll-title>
+        <!-- @HACK do not remove sh-engine-img. The behavior to achieve is kind of special here. See css -->
+        <sh-engine-img></sh-engine-img>
+    </div>
+</sh-activity-bar-medium>

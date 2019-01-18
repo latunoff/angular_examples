@@ -1,0 +1,391 @@
+@import '../../css/animation.css';
+@import '../../css/colors.css';
+@import '../../css/fonts.css';
+@import '../../css/sizes.css';
+
+
+:root {
+    --width-status-info-button:  29.5rem;
+    --width-right:               12.5rem;
+}
+
+sh-activity-bar {
+    display: block;
+    width: 100%;
+    height: calc(100% - 0.25rem);
+    position: relative;
+    bottom: -0.25rem;
+    background-color: var(--background-color-data);
+}
+
+sh-activity-bar > sh-activity-bar-basic
+{
+    display: block;
+    width: 100%;
+    height: 6rem;
+    position: relative;
+}
+
+sh-activity-bar > sh-activity-bar-basic .left
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% - var(--width-status-info-button) - var(--width-right) - 2rem - 2rem);
+    height: 100%;
+    padding: 1rem;
+}
+sh-activity-bar > sh-activity-bar-basic .left > div
+{
+    height: 2rem;
+    line-height: 2rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+sh-activity-bar > sh-activity-bar-basic .left .no-data { font-style: italic; color: var(--color-text-note); }
+
+sh-activity-bar > sh-activity-bar-basic .left .icon
+{
+    position: absolute;
+    top: 3rem;
+    right: 1rem;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.25rem;
+}
+sh-activity-bar > sh-activity-bar-basic .icon.hover { background-color: var(--background-color-icon-greyish-hover) !important; }
+sh-activity-bar > sh-activity-bar-basic .icon.active { background-color: var(--background-color-icon-active) !important; }
+sh-activity-bar > sh-activity-bar-basic .left .icon::after
+{
+    background-size: contain !important;
+    top: calc(50% - 0.75rem);
+    left: calc(50% - 0.75rem);
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+sh-activity-bar > sh-activity-bar-basic .right
+{
+    position: absolute;
+    top: 0;
+    right: calc(var(--width-status-info-button) + 2rem);
+    width: var(--width-right);
+    height: 100%;
+    padding: 1rem 0;
+    margin: 0 1rem;
+    text-align: right;
+}
+sh-activity-bar > sh-activity-bar-basic .right div
+{
+    height: 2rem;
+    line-height: 2rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+sh-activity-bar > sh-activity-bar-basic .right + sh-btn
+{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: var(--width-status-info-button);
+    height: calc(100% - 2rem);
+    margin: 1rem;
+    text-align: right;
+    line-height: 4rem;
+    overflow: visible;
+}
+sh-activity-bar > sh-activity-bar-basic sh-btn.disabled
+{
+    color: var(--color-btn);
+}
+sh-activity-bar > sh-activity-bar-basic .right + sh-btn > div
+{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: calc(var(--width-status-info-button) - 1rem - 3rem);
+    padding: 0 0.5rem 0 0;
+    font-size: var(--font-size-big);
+    font-weight: var(--font-weight-thick);
+}
+sh-activity-bar > sh-activity-bar-basic .right + sh-btn img,
+sh-activity-bar > sh-activity-bar-basic .right + sh-btn sh-svg-icon
+{
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: var(--size-icon-medium);
+    height: var(--size-icon-medium);
+    line-height: 3rem;
+}
+
+sh-activity-bar > sh-activity-bar-medium
+{
+    display: block;
+    position: relative;
+    width: calc(100% - 2rem);
+    border-width: 1px 0 0 0;
+    border-style: solid;
+    border-color: #b3b3b3;
+    margin: 0 1rem;
+}
+
+sh-activity-bar > sh-activity-bar-medium
+{
+    height: 18rem;
+    font-size: 0;
+}
+sh-activity-bar.full > sh-activity-bar-medium { height: calc(18rem + 18rem * 1.5); }
+sh-activity-bar > sh-activity-bar-medium > * { font-size: 1rem; }
+sh-activity-bar-medium > .consumables,
+sh-activity-bar-medium > .device-info
+{
+    display: inline-block;
+    vertical-align: top;
+    border-width: 0 1px 0 0;
+    border-style: solid;
+    border-color: #b3b3b3;
+    margin: 1.75rem 0 1.75rem 0;
+}
+sh-activity-bar .tray-data { width: 100%; border-width: 0; height: calc(100% - 1.75rem); }
+
+sh-activity-bar.full .tray-data
+{
+    margin: 0 0 0.25rem 0;
+    height: calc(100% - 0.25rem - (6 * var(--height-table-body-row)) - (2 * 1.75rem));
+}
+
+sh-activity-bar-medium .device-info,
+sh-activity-bar-medium .consumables
+{
+    height: calc(6 * var(--height-table-body-row));
+    margin-top: 1.75rem;
+}
+sh-activity-bar-medium .device-info .no-data
+{
+    font-size: 1rem;
+    text-align: center;
+    font-style: italic;
+    height: var(--height-table-body-row);
+    line-height: var(--height-table-body-row);
+    width: 100%;
+}
+sh-activity-bar-medium .device-info ng-transclude > div,
+sh-activity-bar-medium .consumables ng-transclude > div
+{
+    width: 100%;
+    height: var(--height-table-body-row);
+    line-height: var(--height-table-body-row);
+    font-size: 0;
+    position: relative;
+}
+sh-activity-bar-medium .device-info ng-transclude > div > *,
+sh-activity-bar-medium .consumables ng-transclude > div > * { font-size: 1rem; }
+sh-activity-bar-medium .device-info div > span
+{
+    display: inline-block;
+    vertical-align: top;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 0 0.25rem;
+}
+sh-activity-bar-medium .tray-data .tbody .amount { text-align: center; }
+sh-activity-bar-medium .tray-data .tbody .weight,
+sh-activity-bar-medium .tray-data .tbody .number { text-align: right; }
+
+sh-activity-bar-medium .device-info div > .main { width: calc((100% - 4rem) * 0.5); }
+sh-activity-bar-medium .device-info div > .sub { width: calc((100% - 4rem) * 0.5); }
+sh-activity-bar-medium .device-info div > sh-svg-icon
+{
+    width: var(--size-icon-small);
+    height: var(--size-icon-small);
+    margin: 0.5rem 1rem;
+}
+
+sh-activity-bar-medium > .consumables
+{
+    width: var(--width-activitybar-consumables);
+    padding: 0 0.25rem 0 0;
+}
+
+sh-activity-bar .consumable-halfrow div
+{
+    display:        inline-block;
+    height:         3rem;
+    line-height:    3rem;
+    padding:        0 0.25rem;
+    vertical-align: top;
+    width:          calc((var(--width-activitybar-consumables) - 2 * var(--size-icon-medium) - 0.25rem - 1px) / 2);
+}
+
+sh-activity-bar-medium > .consumables ng-transclude > div > div:nth-child(3) { padding-left: calc(0.5rem - 1px); }
+sh-activity-bar-medium > .consumables sh-svg-icon { position: relative; }
+sh-activity-bar-medium > .consumables ng-transclude > div:nth-child(1) > sh-svg-icon:nth-child(2)::after
+{
+    margin-top: 0.25rem;
+    height: calc(100% - 0.25rem);
+}
+sh-activity-bar-medium > .consumables ng-transclude > div:last-child > sh-svg-icon:nth-child(2)::after
+{
+    margin-bottom: 0.25rem;
+    height: calc(100% - 0.25rem);
+}
+
+sh-activity-bar-medium > .device-info
+{
+    width: calc(100% - var(--width-activitybar-consumables));
+    border-width: 0;
+}
+
+sh-activity-bar sh-scroll sh-engine-img { visibility: hidden; }
+sh-activity-bar .vscroll sh-scroll sh-engine-img { visibility: visible; }
+sh-activity-bar sh-scroll ~ sh-engine-img
+{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+sh-activity-bar .vscroll sh-scroll ~ sh-engine-img { display: none; }
+
+sh-activity-bar sh-scroll ng-transclude { width: 100%; }
+
+sh-activity-bar .vscroll sh-scroll.sh-scroll
+{
+    width: 100%;
+    height: 100%;
+}
+sh-activity-bar .vscroll sh-vscrollbar,
+sh-activity-bar .vscroll sh-hscrollbar { display: none; }
+
+sh-activity-bar sh-scroll ~ sh-btn
+{
+    height: 1.5rem;
+    width: 2.5rem;
+    position: absolute;
+    display: none;
+}
+sh-activity-bar .vscroll > sh-btn { display: block; }
+sh-activity-bar sh-scroll + sh-btn
+{
+    bottom: -1.5rem;
+    right: 50%;
+}
+sh-activity-bar sh-scroll + sh-btn + sh-btn
+{
+    bottom: -1.5rem;
+    left: 50%;
+}
+
+sh-activity-bar sh-free-space-copy-print,
+sh-activity-bar sh-free-space-prerip-form-scan { padding: 0 0.25rem; height: auto; }
+sh-activity-bar sh-free-space { padding: 0; }
+sh-activity-bar sh-free-space-copy-print
+{
+    padding: 0.5rem 0.25rem 0 0.25rem;
+    border-style: solid;
+    border-width: 1px 0 0 0;
+    border-color: var(--border-color-table);
+}
+
+sh-activity-bar sh-gauge-unknown
+{
+    display: block;
+    width: calc(100% - 2 * 1rem);
+    height: 2rem;
+    background-color: var(--background-color-gauge-base);
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    border-radius: 0.25rem;
+    overflow: hidden;
+    font-size: 0;
+}
+
+sh-activity-bar sh-gauge-unknown.error > div
+{
+    background-image: var(--background-image-gauge-error) !important;
+}
+
+sh-activity-bar sh-gauge-unknown > div
+{
+    display: inline-block;
+    vertical-align: top;
+    height: 2rem;
+    width: calc(100% / 11);
+    background-image: var(--background-image-gauge);
+}
+
+sh-activity-bar .device-info > sh-scroll > ng-transclude > div { transition: var(--transition-pulse); }
+sh-activity-bar .device-info.highlight > sh-scroll > ng-transclude > div { background-color: var(--background-color-active); }
+
+sh-activity-bar sh-scroll-title
+{
+    display: block;
+    width: 100%;
+    height: 1.75rem;
+    line-height: 1.75rem;
+    overflow: hidden;
+    padding: 0 0.25rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: var(--font-weight-thick);
+    background-color: var(--background-color-table-head);
+    position: absolute;
+    top: -1.75rem;
+    left: 0;
+}
+
+sh-activity-bar .warning { color: var(--color-warning); }
+sh-activity-bar .error { color: var(--color-error); }
+
+sh-activity-bar .consumables .consumable-halfrow
+{
+    position: relative;
+    display: inline-block;
+    font-size: 0;
+    width: 50%;
+}
+sh-activity-bar .consumables .consumable-halfrow:nth-child(1)::after
+{
+    content: '';
+    height: 100%;
+    display: block;
+    border-width: 0 1px 0 0;
+    border-style: solid;
+    border-color: var(--border-color-table);
+    position: absolute;
+    top: 0;
+    right: -1px;
+}
+sh-activity-bar .consumables .consumable-halfrow > * { font-size: var(--font-size-standard); }
+sh-activity-bar .consumables sh-svg-icon.status-consumable
+{
+    position: absolute;
+    width: var(--size-icon-xsmall);
+    height: var(--size-icon-xsmall);
+    top: 1.25rem;
+    right: 1px;
+}
+
+sh-activity-bar .device-info .envelope-only
+{
+    color:       var(--color-warning);
+    font-size:   var(--font-size-envelope);
+    font-weight: bold;
+    height:      calc(var(--font-size-envelope) + 2.5rem);
+    line-height: calc(var(--font-size-envelope) + 2rem);
+    text-align:  center;
+}
+
+sh-activity-bar .consumables ng-transclude
+{
+    text-align: center;
+}
+sh-activity-bar .consumables ng-transclude > *
+{
+    text-align: left;
+}
